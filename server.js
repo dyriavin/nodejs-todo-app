@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080
+const homeRoutes = require('./api/routes/home')
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`)
+})
 
-app.listen(port)
-
-console.log('Server is running on ' + port)
+app.get('/', homeRoutes)
