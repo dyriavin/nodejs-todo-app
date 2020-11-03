@@ -6,4 +6,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)
 })
 
-app.get('/', homeRoutes)
+app.all('/', homeRoutes)
