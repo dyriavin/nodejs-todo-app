@@ -1,12 +1,12 @@
 const { Router } = require('express')
-import { createDbRecord } from '../controllers/BaseController.js'
+    // import { createDbRecord } from '../controllers/BaseController.js'
 const router = Router();
 
 router.get('/', (req, res) => {
     res.json(formatter('GET'))
 })
 router.post('/', (req, res) => {
-    console.log(createDbRecord)
+    res.json(formatter('POST'))
 })
 
 
