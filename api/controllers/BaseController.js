@@ -13,12 +13,12 @@ const anotherJSON = {
     text: "This is simple text"
 }
 
-function createDbRecord(data) {
-    firstRecord = new simpleModel(...data)
-    console.log(firstRecord)
-}
+// function createDbRecord(data) {
+//     firstRecord = new simpleModel(...data)
+//     console.log(firstRecord)
+// }
 
 module.exports = simpleResponseJSON
 module.exports = anotherJSON
     //Todo: fix issue with export and import
-module.exports = createDbRecord
+    // module.exports = createDbRecord
