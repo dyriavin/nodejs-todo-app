@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const db = require('./api/database/dabase')
+
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080
 app.use(bodyParser.urlencoded({

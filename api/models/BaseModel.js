@@ -18,7 +18,8 @@ const simpleModel = new mongoose.Schema({
         default: Date.now
     }
 })
-const simpleModel = module.exports = db.model('simpleModel', simpleModel);
+
+module.exports = mongoose.model('simpleModel', simpleModel);
 module.exports.get = function(callback, limit) {
     simpleModel.find(callback).limit(limit);
 }
