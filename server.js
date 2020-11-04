@@ -22,12 +22,8 @@ async function start() {
     }
 }
 start()
-    //Routes 
-const homeRoutes = require('./api/routes/home')
-const restRoutes = require('./api/routes/rest')
+app.use('/api/', require('./api/routes/auth.routes'))
+
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)
 })
-
-app.all('/', homeRoutes)
-app.use('/rest-routes', restRoutes)
