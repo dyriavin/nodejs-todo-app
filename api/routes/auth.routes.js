@@ -4,10 +4,14 @@ const {
 const User = require('../models/User')
 const router = Router();
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+    //TODO: replace to cfg
+const JWT_SECRET = 'superdupersecret'
 const {
     check,
     validationResult
 } = require('express-validator')
+
 router.post('/register', [
         check('email', 'invalid email').isEmail(),
         check('password', 'invalid password').isLength({
@@ -57,9 +61,63 @@ router.post('/register', [
             })
         }
     })
-router.get('/', async(req, res) => {
-    console.log(data)
-    res.json('')
-})
+
+
+
+router.post('/login', [
+        check('email', 'invalid email').isEmail(),
+        check('password', 'invalid password').isLength({
+            min: 5
+        })
+    ],
+    async(req, res) => {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(403).json({
+                    errors: errors.array(),
+                    message: "Invalid auth params"
+                })
+            }
+            const {
+                email,
+                password
+            } = req.body
+            const user = await User.findOne({
+                email
+            })
+            if (!user) {
+                return res.status(401).json({
+                    message: "User doesnt exists"
+                })
+            }
+            const isMatch = await bcrypt.compare(password, user.password)
+            if (!isMatch) {
+                return res.status(401).json({
+                    message: "Invalid auth params"
+                })
+            }
+            const token = jwt.sign({
+                    userId: user.id,
+                    username: user.name
+                },
+                JWT_SECRET, { expiresIn: '1h' }
+            )
+            res.json({
+                token,
+                user: {
+                    username: user.name,
+                    email
+                }
+            })
+        } catch (error) {
+            res.status(400).json({
+                message: error.message
+            })
+        }
+    })
+
+
+
 
 module.exports = router
