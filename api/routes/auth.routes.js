@@ -49,14 +49,14 @@ router.post('/register', [
             await user.save()
             res.status(201).json({
                 message: "success",
-                information: [{
+                information: {
                     username: name,
                     email: email
-                }]
+                }
             })
 
         } catch (error) {
-            res.status(error.code).json({
+            res.status(400).json({
                 message: error.message
             })
         }
@@ -74,7 +74,7 @@ router.post('/login', [
         try {
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
-                return res.status(403).json({
+                return res.status(400).json({
                     errors: errors.array(),
                     message: "Invalid auth params"
                 })
@@ -87,13 +87,13 @@ router.post('/login', [
                 email
             })
             if (!user) {
-                return res.status(401).json({
+                return res.status(400).json({
                     message: "User doesnt exists"
                 })
             }
             const isMatch = await bcrypt.compare(password, user.password)
             if (!isMatch) {
-                return res.status(401).json({
+                return res.status(400).json({
                     message: "Invalid auth params"
                 })
             }
