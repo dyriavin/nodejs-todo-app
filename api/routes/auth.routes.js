@@ -48,7 +48,7 @@ router.post('/register', [
             })
             await user.save()
             res.status(201).json({
-                message: "success",
+                message: `User ${name} created`,
                 information: {
                     username: name,
                     email: email
